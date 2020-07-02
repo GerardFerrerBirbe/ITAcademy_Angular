@@ -1,0 +1,26 @@
+<div *ngIf="employee">
+    <h2> Detall {{employee.firstName}} {{employee.lastName | uppercase}}</h2>
+    <div><span>Id: </span>{{employee.id}}</div>
+    <div>
+        <label>Nom:
+        <input [(ngModel)]="employee.firstName" placeholder="firstName"/>
+        </label>
+    </div>
+    <div>
+        <label>Cognoms:
+        <input [(ngModel)]="employee.lastName" placeholder="lastName"/>
+        </label>
+    </div>
+    <div>
+        <label>Càrrec:
+        <input [(ngModel)]="employee.jobPosition" placeholder="jobPosition"/>
+        </label>
+    </div>
+    <div>
+        <label>Salari:
+        <input [(ngModel)]="employee.salary" placeholder="salary"/>
+        </label>
+    </div>
+</div>
+<button (click)="save()">Guardar</button>
+<button (click)="goBack()">Tornar</button>

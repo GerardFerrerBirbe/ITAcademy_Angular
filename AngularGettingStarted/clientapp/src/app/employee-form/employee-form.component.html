@@ -1,0 +1,20 @@
+<div>
+    <label>Nom:
+      <input #firstName />
+    </label>
+    <label>Cognoms:
+        <input #lastName />
+    </label>
+    <label>Càrrec:
+        <input #jobPosition />
+    </label>
+    <label>Salari:
+        <input #salary />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(firstName.value, lastName.value, jobPosition.value); firstName.value=''">
+      Afegir
+    </button>
+  </div>
+
+<button (click)="goBack()">Tornar</button>
