@@ -1,5 +1,4 @@
-<p>employees works!</p>
-<h1 id="tableLabel">Empleats</h1>
+<h2 id="tableLabel">Empleats</h2>
 
 <button [routerLink]='["/employee-form"]' class="btn-add">Afegir empleat</button>
 
@@ -22,7 +21,7 @@
       <td>{{ employee.lastName }}</td>
       <td>{{ employee.jobPosition }}</td>
       <td>{{ employee.salary }}</td>
-      <td><button routerLink="/employee-detail/{{employee.id}}" class="btn-update" title="update employee">Editar</button></td>
+      <td><button routerLink="/employee-form/{{employee.id}}" class="btn-update" title="update employee">Editar</button></td>
       <td><button class="btn-delete" title="delete employee"
         (click)="delete(employee)">Borrar</button></td>
     </tr>

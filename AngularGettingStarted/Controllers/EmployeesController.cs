@@ -47,7 +47,7 @@ namespace AngularGettingStarted.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutEmployee(int id, EmployeeDTO employeeDTO)
+        public async Task<ActionResult> PutEmployee([FromRoute] int id, [FromBody]EmployeeDTO employeeDTO)
         {            
             if (id != employeeDTO.Id)
             {

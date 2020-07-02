@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { EmployeesService }  from '../employees.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-form',
@@ -10,45 +11,69 @@ import { EmployeesService }  from '../employees.service';
   styleUrls: ['./employee-form.component.css']
 })
 export class EmployeeFormComponent implements OnInit {
-  @Input() employee: Employee;
-
+  
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private employeesService: EmployeesService,
     private location: Location
   ) { }
 
+  editionMode: boolean = false;
+  formGroup: FormGroup;
+  employeeId: number;
+  employeeIdToString: string;
+
   employees: Employee[];
 
   ngOnInit(): void {
-    this.getEmployee();
+    this.formGroup = this.fb.group({
+      firstName: '',
+      lastName: '',
+      jobPosition: '',
+      salary: ''
+    });  
+
+    this.route.params.subscribe(params => {
+      if (params["id"] == undefined){
+        return;
+      }
+      this.editionMode = true;
+
+      this.employeeId = params["id"];
+
+      this.employeesService.getEmployee(this.employeeId.toString())
+      .subscribe(employee => this.loadForm(employee));
+    });
   }
 
-  getEmployee(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.employeesService.getEmployee(id)
-      .subscribe(employee => this.employee = employee);
+  loadForm(employee: Employee){
+    this.formGroup.patchValue({
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      jobPosition: employee.jobPosition,
+      salary: employee.salary
+    })
   }
 
-  add(firstName: string, lastName: string, jobPosition: string): void {
-    firstName = firstName.trim();
-    lastName = lastName.trim();
-    jobPosition = jobPosition.trim();
+  save() {
+    let employee: Employee = Object.assign({}, this.formGroup.value);
+    console.table(employee);
 
-    if (!firstName) { return; }
-    this.employeesService.addEmployee({ firstName, lastName, jobPosition } as Employee)
-      .subscribe( employee => {
-        this.employees.push(employee);
-      });
-  }
-
-  save(): void {
-    this.employeesService.updateEmployee(this.employee)
-      .subscribe(() => this.goBack());
+    if (this.editionMode){
+      //edit employee
+      this.employeeIdToString = this.employeeId.toString();
+      employee.id = parseInt(this.employeeIdToString);      
+      this.employeesService.updateEmployee(employee)
+      .subscribe();
+    } else {
+      //add employee
+      this.employeesService.addEmployee(employee)
+      .subscribe();
+    }    
   }
   
   goBack(): void {
     this.location.back();
   }
-
 }

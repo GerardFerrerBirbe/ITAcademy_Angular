@@ -1,20 +1,51 @@
-<div>
-    <label>Nom:
-      <input #firstName />
-    </label>
-    <label>Cognoms:
-        <input #lastName />
-    </label>
-    <label>Càrrec:
-        <input #jobPosition />
-    </label>
-    <label>Salari:
-        <input #salary />
-    </label>
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="add(firstName.value, lastName.value, jobPosition.value); firstName.value=''">
-      Afegir
-    </button>
-  </div>
+<h1>{{editionMode ? 'Editar' : 'Afegir'}} Empleat</h1>
+<form class="form-horizontal" novalidate
+    (ngSubmit)="save()" [formGroup]="formGroup">
+      <div class="form-group">
+        <label for="firstNameId">Nom</label>
+        <div>
+          <input class="form-control"
+          id="firstNameId"
+          type="text"
+          required
+          formControlName="firstName"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastNameId">Cognoms</label>
+        <div>
+          <input class="form-control"
+          id="lastNameId"
+          type="text"
+          required
+          formControlName="lastName"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="jobPositionId">Càrrec</label>
+        <div>
+          <input class="form-control"
+          id="jobPositionId"
+          type="text"
+          required
+          formControlName="jobPosition"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="salaryId">Salari</label>
+        <div>
+          <input class="form-control"
+          id="salaryId"
+          type="number"
+          required
+          formControlName="salary"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <button type="submit">Guardar</button>
+        </div>
+      </div>
+</form>
 
 <button (click)="goBack()">Tornar</button>

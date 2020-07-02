@@ -20,13 +20,13 @@ export class EmployeesService {
     return this.http.get<Employee[]>(this.apiUrl);
   }
 
-  getEmployee(id: number): Observable<Employee> {
+  getEmployee(id: string): Observable<Employee> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Employee>(url)
   }
 
-  updateEmployee(employee: Employee): Observable<any> {
-    return this.http.put(this.apiUrl, employee, this.httpOptions);
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(this.apiUrl + "/" + employee.id.toString(), employee, this.httpOptions);
   }
 
   addEmployee(employee: Employee): Observable<Employee> {
