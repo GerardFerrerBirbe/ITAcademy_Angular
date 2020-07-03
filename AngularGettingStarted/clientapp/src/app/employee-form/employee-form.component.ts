@@ -21,8 +21,7 @@ export class EmployeeFormComponent implements OnInit {
 
   editionMode: boolean = false;
   formGroup: FormGroup;
-  employeeId: number;
-  employeeIdToString: string;
+  employeeId: any;
 
   employees: Employee[];
 
@@ -61,9 +60,9 @@ export class EmployeeFormComponent implements OnInit {
     console.table(employee);
 
     if (this.editionMode){
-      //edit employee
-      this.employeeIdToString = this.employeeId.toString();
-      employee.id = parseInt(this.employeeIdToString);      
+      //edit employee     
+      this.employeeId = parseInt(this.employeeId);
+      employee.id = this.employeeId;      
       this.employeesService.updateEmployee(employee)
       .subscribe();
     } else {
